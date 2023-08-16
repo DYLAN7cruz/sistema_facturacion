@@ -8,6 +8,7 @@ from database.db import get_conection
 
 from controllers.user import users
 from controllers.cliente import clientes
+from controllers.empresa import empresa
 
 conn = get_conection()
 # <!-- ============================================================== -->
@@ -16,6 +17,7 @@ app.secret_key = "rokugan"
 # <!-- ============================================================== -->
 app.register_blueprint(users)
 app.register_blueprint(clientes)
+app.register_blueprint(empresa)
 # app.register_blueprint(product)
 
 
@@ -36,18 +38,14 @@ def admin():
 def login():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-    # Comprobar si existen solicitudes POST de "cedula" y "contrasena" (formulario enviado por el usuario)
-    if request.method == 'POST' and 'cedula' in request.form and 'contrasena' in request.form:
+    if request.method == 'POST':
         cedula = request.form['cedula']
         contrasena = request.form['contrasena']
 
-        # Verificar si la cuenta existe usando SQL
-        cursor.execute('SELECT * FROM usuario WHERE cedula = %s', (cedula,))
-        # Obtener un registro y devolver el resultado
+        cursor.execute('SELECT * FROM usuario WHERE cedula = %s AND contrasena = %s', (cedula, contrasena))
         account = cursor.fetchone()
 
-        if account and account['contrasena'] == contrasena:
-            # Crear datos de sesión, podemos acceder a estos datos en otras rutas
+        if account:
             session['loggedin'] = True
             session['cedula'] = account['cedula']
             session['cargo'] = account['cargo']
@@ -59,13 +57,12 @@ def login():
             if session['cargo'] == "Administrador":
                 
                 return render_template('admin.html')
-
             
         else:
-            # La cuenta no existe o la cédula/contraseña son incorrectas
-            flash('Cédula/contraseña incorrectas')
+            flash('BIENVENIDO SEÑOR')
 
-    return render_template('index.html')
+    return render_template('nuevo_cliente.html')
+
 
 
 

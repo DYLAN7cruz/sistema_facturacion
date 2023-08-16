@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!--  -->
+    <!--  -->
 
     <!-- SIDEBAR -->
     <section id="sidebar">
@@ -130,30 +130,36 @@
 
         <div class="todo">
             <div class="form login">
-                <span class="title">Editar cliente</span>
-                <form action="/update_cliente/{{cliente.id}}" method="POST">
+                <span class="title">Editar empresa</span>
+                <form action="/update_empresa/{{empresa.id}}" method="POST">
                     <div class="input-field">
-                        <input type="text" placeholder="Ingrese su cedula" name="cedula" id="cedula" value="{{cliente.id}}" required maxlength="10" min="0" readonly>
+                        <input type="text" placeholder="Ingrese su cedula" name="id" id="cedula" value="{{empresa.id}}"
+                            required maxlength="10" min="0" readonly>
                         <i class="fa-solid fa-address-card icon"></i>
                     </div>
                     <div class="input-field">
-                        <input type="text" placeholder="Ingrese sus nombres" name="nombres" id="nombres" value="{{cliente.nombres}}" required>
+                        <input type="text" placeholder="Ingrese sus nombres" name="nombrecomercial" id="nombres"
+                            value="{{empresa.nombrecomercial}}" required>
                         <i class="fa-solid fa-file-signature icon"></i>
                     </div>
                     <div class="input-field">
-                        <input type="text" placeholder="Ingrese sus apellidos" name="apellidos" id="apellidos" value="{{cliente.apellidos}}" required>
+                        <input type="text" placeholder="Ingrese sus apellidos" name="razonsocial" id="apellidos"
+                            value="{{empresa.razonsocial}}" required>
                         <i class="fa-solid fa-file-signature icon"></i>
                     </div>
                     <div class="input-field">
-                        <input type="text" placeholder="Ingrese su direccion" name="direccion" id="direccion" value="{{cliente.direccion}}"  required>
+                        <input type="text" placeholder="Ingrese su direccion" name="telefono" id="direccion"
+                            value="{{empresa.telefono}}" required>
                         <i class="fa-solid fa-location-dot icon"></i>
                     </div>
                     <div class="input-field">
-                        <input type="text" placeholder="Ingrese su telefono" name="telefono" id="telefono" value="{{cliente.telefono}}" required maxlength="15" >
+                        <input type="text" placeholder="Ingrese su telefono" name="email" id="telefono"
+                            value="{{empresa.email}}" required maxlength="15">
                         <i class="fa-solid fa-phone-volume icon"></i>
                     </div>
                     <div class="input-field">
-                        <input type="email" placeholder="Ingrese su correo" name="correo" id="correo" value="{{cliente.email}}" required>
+                        <input type="text" placeholder="Ingrese su correo" name="direccion" id="correo"
+                            value="{{empresa.direccion}}" required>
                         <i class="fa-solid fa-envelope icon"></i>
                     </div>
 
@@ -162,18 +168,7 @@
                     </div>
 
                 </form>
-                <!--trae el mensaje al html-->
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-warning alert-dismissible fade show alerta" role="alert">
-                    <strong> El usuario o contraseña esta incorrecto</strong>
-                    <button type="button" class="icono" data-bs-dismiss="alert" aria-label="Close"><i
-                            class="fa-solid fa-circle-xmark equis"></i></button>
-                </div>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
+
 
 
 
@@ -188,6 +183,27 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
             crossorigin="anonymous"></script>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <script>
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '{{ message }}',
+                showConfirmButton: false,
+                timer: 2000
+            })
+
+
+
+
+        </script>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
     </section>
 </body>
 
